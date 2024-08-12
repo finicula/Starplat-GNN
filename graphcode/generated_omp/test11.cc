@@ -58,7 +58,13 @@ int main()
 
   GNN gnn(G, "", "");
   gnn.gcn_preprocessing();
-
+  std::vector<int> layers;
+  layers.push_back(160);
+  layers.push_back(168773);
+  layers.push_back(7);
+  layers.push_back(777);
+  gnn.initializeLayers(layers);
+  gnn.message_pass(layers);
   // print all the edges with weights
   for (int nod = 0; nod < G.num_nodes(); nod++)
   {

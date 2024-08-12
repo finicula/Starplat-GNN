@@ -1034,6 +1034,17 @@ void GNN::gcn_preprocessing()
   //   preprocessing_cuda();
   // }
 }
+void GNN::initializeLayers(std::vector<int> neuronsPerLayer,char *initType)
+{
+  
+  if (strcmp(environment.get_backend(), "omp") == 0){
+    initializeLayers_omp(*this, neuronsPerLayer, initType);
+  }
+  else if (strcmp(environment.get_backend(), "cuda") == 0)
+  {
+    // initializeLayers_cuda();
+  }
+}
 
 env::env(char *backend, char *algoType, char *filename)
 {

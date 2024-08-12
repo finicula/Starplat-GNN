@@ -9,6 +9,7 @@
 #include <string.h>
 #include <climits>
 #include <cmath>
+#include <random>
 #include "graph_ompv2.hpp"
 
 class env;
@@ -100,26 +101,30 @@ public:
   std::vector<edge> getInNeighbors(int node);
 };
 
-class layer
+class Layer
 {
 public:
   int32_t num_features;
-  float *weights;
-  float bias;
+  float **weights;
+  float *bias;
   float *output;
   float *input;
   float *grad_input;
-  float *grad_weights;
+  float **grad_weights;
   float *grad_bias;
   float *grad_output;
+  
+
 };
 
 class GNN
 {
   graph &g;
-  std::vector<layer> layers;
+  std::vector<Layer> layers;
   std::vector<float> features;
   std::vector<int32_t> labels;
+  int32_t feature_size;
+  int32_t num_classes;
   char *featFile, *labFile;
 
 public:
@@ -128,6 +133,7 @@ public:
   void loadFeatures();
   void loadLabels();
   void gcn_preprocessing();
+  void initializeLayers(std::vector<int> neuronsPerLayer, char *initType);
 };
 
 class env
